@@ -30,6 +30,7 @@ namespace Tarea1.Topicos.AdventureWorksLT.Model.Model
         public Guid Rowguid { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        public virtual ProductModel ProductModel { get; set; }
         public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set; }
     }
 }

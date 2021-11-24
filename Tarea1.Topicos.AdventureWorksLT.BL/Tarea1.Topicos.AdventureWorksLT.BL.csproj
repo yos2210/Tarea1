@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Logica\" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
+    <ProjectReference Include="..\Tarea1.Topicos.AdventureWorksLT.Model\Tarea1.Topicos.AdventureWorksLT.Model.csproj" />
   </ItemGroup>
 
 </Project>

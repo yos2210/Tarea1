@@ -19,6 +19,7 @@ namespace Tarea1.Topicos.AdventureWorksLT.Model.Model
 
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductModel> ProductModels { get; set; }
         public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
         public virtual DbSet<SalesOrderHeader> SalesOrderHeaders { get; set; }
 
@@ -197,6 +198,39 @@ namespace Tarea1.Topicos.AdventureWorksLT.Model.Model
                 entity.Property(e => e.Weight)
                     .HasColumnType("decimal(8, 2)")
                     .HasComment("Product weight.");
+
+                entity.HasOne(d => d.ProductModel)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.ProductModelId);
+            });
+
+            modelBuilder.Entity<ProductModel>(entity =>
+            {
+                entity.ToTable("ProductModel", "SalesLT");
+
+                entity.HasIndex(e => e.Name, "AK_ProductModel_Name")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Rowguid, "AK_ProductModel_rowguid")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.CatalogDescription, "PXML_ProductModel_CatalogDescription");
+
+                entity.Property(e => e.ProductModelId).HasColumnName("ProductModelID");
+
+                entity.Property(e => e.CatalogDescription).HasColumnType("xml");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Rowguid)
+                    .HasColumnName("rowguid")
+                    .HasDefaultValueSql("(newid())");
             });
 
             modelBuilder.Entity<SalesOrderDetail>(entity =>
