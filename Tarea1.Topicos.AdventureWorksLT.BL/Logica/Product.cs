@@ -28,5 +28,8 @@ namespace Tarea1.Topicos.AdventureWorksLT.BL.Logica
             }
             return resultado;
         }
+
+     
+
     }
 }

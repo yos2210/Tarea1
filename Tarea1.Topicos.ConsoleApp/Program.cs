@@ -6,7 +6,13 @@ namespace Tarea1.Topicos.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Colsultas();
+        }
+
+        private static void Colsultas()
+        {
+            var laMagia = new LogicaPrincipal();
+            laMagia.GenerarConsultas();
         }
     }
 }
