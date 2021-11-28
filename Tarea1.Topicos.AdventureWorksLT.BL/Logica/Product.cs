@@ -14,12 +14,12 @@ namespace Tarea1.Topicos.AdventureWorksLT.BL.Logica
             IList<Model.Model.Product> resultado;
             using (var _contexto = new Model.Model.AdventureWorksLT2019Context())
             {
-                resultado = _contexto.Products.Where(p => p.DiscontinuedDate == null).OrderBy(p => p.ListPrice).ToList();
+                resultado = _contexto.Products.Where(p => p.SellEndDate != null).OrderBy(p => p.ListPrice).ToList();
             }
             return resultado;
         }
 
-        public IList<Model.Model.Product> ListaProductosPorNombreModelo(String nombreProducto)
+        public IList<Model.Model.Product> ListaOrdenesConDetalleProducto(String nombreProducto)
         {
             IList<Model.Model.Product> resultado;
             using (var _contexto = new Model.Model.AdventureWorksLT2019Context())

@@ -11,8 +11,8 @@ namespace Tarea1.Topicos.ConsoleApp
 
         private static void Colsultas()
         {
-            var laMagia = new LogicaPrincipal();
-            laMagia.GenerarConsultas();
+            var llamado = new LogicaPrincipal();
+            llamado.GenerarConsultas();
         }
     }
 }

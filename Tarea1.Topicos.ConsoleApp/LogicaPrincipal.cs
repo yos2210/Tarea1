@@ -11,14 +11,16 @@ namespace Tarea1.Topicos.ConsoleApp
 
         public void GenerarConsultas()
         {
-            //ListaFacturasPorNombreAproxCliente();
+            
             ListaProductosDescontinuados();
             ListaProductosPorNombreModelo();
+            ListaFacturasPorNombreAproxCliente();
+            ListaOrdenesConDetalleProducto();
         }
 
         private void ListaFacturasPorNombreAproxCliente()
         {
-            var nombreCliente = "ma";
+            var nombreCliente = "an";
             var servicio = new AdventureWorksLT.BL.Logica.Customer();
             var resultado = servicio.ListaFacturasPorNombreAproxCliente(nombreCliente);
             ImprimirListaFacturasPorNombreAproxCliente(resultado);
@@ -27,7 +29,7 @@ namespace Tarea1.Topicos.ConsoleApp
         private void ImprimirListaFacturasPorNombreAproxCliente(IList<AdventureWorksLT.Model.Model.Customer> resultado)
         {
 
-            System.Console.WriteLine("Consulta 1:\n");
+            System.Console.WriteLine("Consulta 3:\n");
             if (resultado == null)
             {
                 System.Console.WriteLine("Lista sin elementos");
@@ -35,7 +37,10 @@ namespace Tarea1.Topicos.ConsoleApp
             }
             foreach (var customer in resultado)
             {
-                System.Console.WriteLine($"Producto: {customer.FullName}");
+                foreach (var sale in customer.SalesOrderHeaders)
+                {   
+                        System.Console.WriteLine($"Cliente: {customer.FullName} - Id Venta: {sale.SalesOrderId}");           
+                }
             }
             System.Console.WriteLine("\n");
         }
@@ -51,7 +56,7 @@ namespace Tarea1.Topicos.ConsoleApp
         private void ImprimirListaProductosDescontinuados(IList<AdventureWorksLT.Model.Model.Product> resultado)
         {
 
-            System.Console.WriteLine("Consulta 2:\n");
+            System.Console.WriteLine("Consulta 1:\n");
             if (resultado == null)
             {
                 System.Console.WriteLine("Lista sin elementos");
@@ -59,23 +64,51 @@ namespace Tarea1.Topicos.ConsoleApp
             }
             foreach (var product in resultado)
             {
-                System.Console.WriteLine($"Id: {product.ProductId} - Producto: {product.Name} ");
+                System.Console.WriteLine($"Id: {product.ProductId} - Producto: {product.Name} - Precio: {product.ListPrice}");
             }
             System.Console.WriteLine("\n");
         }
 
         private void ListaProductosPorNombreModelo()
         {
-            var nombreProducto = "ma";
-            var servicio = new AdventureWorksLT.BL.Logica.Product();
-            var resultado = servicio.ListaProductosPorNombreModelo(nombreProducto);
+            var nombreModelo = "short";
+            var servicio = new AdventureWorksLT.BL.Logica.ProductModel();
+            var resultado = servicio.ListaProductosPorNombreModelo(nombreModelo);
             ImprimirListaProductosPorNombreModelo(resultado);
 
         }
-        private void ImprimirListaProductosPorNombreModelo(IList<AdventureWorksLT.Model.Model.Product> resultado)
+        private void ImprimirListaProductosPorNombreModelo(IList<AdventureWorksLT.Model.Model.ProductModel> resultado)
         {
 
-            System.Console.WriteLine("Consulta 3:\n");
+            System.Console.WriteLine("Consulta 2:\n");
+            if (resultado == null)
+            {
+                System.Console.WriteLine("Lista sin elementos");
+                return;
+            }
+            foreach (var productModel in resultado)
+            {
+                foreach (var product in productModel.Products)
+                {
+                    System.Console.WriteLine($"Producto: {product.Name} - Modelo: {productModel.Name}");
+                }
+
+            }
+            System.Console.WriteLine("\n");
+        }
+
+        private void ListaOrdenesConDetalleProducto()
+        {
+            var nombreProducto = "rear";
+            var servicio = new AdventureWorksLT.BL.Logica.Product();
+            var resultado = servicio.ListaOrdenesConDetalleProducto(nombreProducto);
+            ImprimirListaOrdenesConDetalleProducto(resultado);
+
+        }
+        private void ImprimirListaOrdenesConDetalleProducto(IList<AdventureWorksLT.Model.Model.Product> resultado)
+        {
+
+            System.Console.WriteLine("Consulta 4:\n");
             if (resultado == null)
             {
                 System.Console.WriteLine("Lista sin elementos");
@@ -83,15 +116,14 @@ namespace Tarea1.Topicos.ConsoleApp
             }
             foreach (var product in resultado)
             {
-                foreach (var salesOrderDetails in product.SalesOrderDetails)
+                foreach (var sale in product.SalesOrderDetails)
                 {
-                    System.Console.WriteLine($"Orden: {salesOrderDetails.OrderQty} - Nombre: {product.Name}");
+                    System.Console.WriteLine($"Orden: {sale.SalesOrderId} - Producto: {product.Name}");
                 }
 
             }
             System.Console.WriteLine("\n");
         }
-
 
     }
 

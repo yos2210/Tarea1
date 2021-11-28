@@ -14,7 +14,7 @@ namespace Tarea1.Topicos.AdventureWorksLT.BL.Logica
             IList<Model.Model.Customer> resultado;
             using (var _contexto = new Model.Model.AdventureWorksLT2019Context())
             {
-                resultado = _contexto.Customers.Include(c => c.SalesOrderHeaders).Where(p => p.FullName.Contains(nombreCliente)).OrderBy(p => p.CustomerId).ToList();
+                resultado = _contexto.Customers.Include(c => c.SalesOrderHeaders).ThenInclude(s => s.SalesOrderDetails).Where(p => p.FirstName.Contains(nombreCliente)).OrderBy(p => p.CustomerId).ToList();
             }
             return resultado;
         }
